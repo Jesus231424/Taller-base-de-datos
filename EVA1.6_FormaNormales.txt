@@ -1,0 +1,140 @@
+MySQL Shell 8.0.44
+
+Copyright (c) 2016, 2025, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > sql
+sql is not defined (ReferenceError)
+ MySQL  JS > /sql
+Expected an operand but found / (SyntaxError)
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 8
+Server version: 8.0.44 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > show tables
+                               -> ;
+ERROR: 1046 (3D000): No database selected
+ MySQL  localhost:3306 ssl  SQL > show table
+                               -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ MySQL  localhost:3306 ssl  SQL > SHOW TABLES;
+ERROR: 1046 (3D000): No database selected
+ MySQL  localhost:3306 ssl  SQL > use taller1;
+Default schema set to `taller1`.
+Fetching global names, object names from `taller1` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  taller1  SQL > show tables;
++-------------------+
+| Tables_in_taller1 |
++-------------------+
+| client            |
+| cursos            |
+| grades            |
+| persona           |
+| professor         |
+| students          |
+| venta             |
++-------------------+
+7 rows in set (0.0046 sec)
+ MySQL  localhost:3306 ssl  taller1  SQL > create table Employee(
+                                        -> Employee_ID int(11) not null auto_increment,
+                                        -> name varchar(50) not null ,
+                                        -> home_station varchar(50), not null);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not null)' at line 4
+ MySQL  localhost:3306 ssl  taller1  SQL > create table Employee( Employee_ID int(11) NOT NULL auto_increment, name varchar(50) NOT NULL , home_station varchar(50), NOT NULL);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOT NULL)' at line 1
+ MySQL  localhost:3306 ssl  taller1  SQL > create table Employee(Employee_ID int(11) NOT NULL auto_increment key, name varchar(50) NOT NULL , home_station varchar(50), NOT NULL);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOT NULL)' at line 1
+ MySQL  localhost:3306 ssl  taller1  SQL > create table Employee(Employee_ID int(11) NOT NULL auto_increment key, name varchar(50) NOT NULL , home_station varchar(50), NOT NULL);^C
+ MySQL  localhost:3306 ssl  taller1  SQL > CREATE TABLE Employee (
+                                        ->     Employee_ID INT(11) NOT NULL AUTO_INCREMENT,
+                                        ->     name VARCHAR(50) NOT NULL,
+                                        ->     home_station VARCHAR(50) NOT NULL,
+                                        ->     PRIMARY KEY (Employee_ID)
+                                        -> );
+Query OK, 0 rows affected, 1 warning (0.0437 sec)
+Warning (code 1681): Integer display width is deprecated and will be removed in a future release.
+ MySQL  localhost:3306 ssl  taller1  SQL > CREATE TABLE Job(     Job_Code INT(11) NOT NULL AUTO_INCREMENT,     Job VARCHAR(50) NOT NULL,    State_code VARCHAR(50) NOT NULL,     PRIMARY KEY (Job_code) );
+Query OK, 0 rows affected, 1 warning (0.0391 sec)
+Warning (code 1681): Integer display width is deprecated and will be removed in a future release.
+ MySQL  localhost:3306 ssl  taller1  SQL > select * from job
+                                        -> ;
+Empty set (0.0056 sec)
+ MySQL  localhost:3306 ssl  taller1  SQL > show job
+                                        -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'job' at line 1
+ MySQL  localhost:3306 ssl  taller1  SQL > insert into Employee(Employee_ID,name,home_station) values("001","Alice","Michigan"),("002","Bob", "Wyomong")
+                                        -> ;
+Query OK, 2 rows affected (0.0319 sec)
+
+Records: 2  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  taller1  SQL > insert into Job(Job_Code,Job,Station_Code) Values("01","Chef","26"),("02","waiter","26"),("02","waiter","56"),("03","Bartender","56"),("01","Chef","56")
+                                        -> ;
+ERROR: 1054 (42S22): Unknown column 'Station_Code' in 'field list'
+ MySQL  localhost:3306 ssl  taller1  SQL > insert into Job(Job_Code,Job,State_Code) Values("01","Chef","26"),("02","waiter","26"),("02","waiter","56"),("03","Bartender","56"),("01","Chef","56") ;
+ERROR: 1062 (23000): Duplicate entry '2' for key 'job.PRIMARY'
+ MySQL  localhost:3306 ssl  taller1  SQL > ^C
+ MySQL  localhost:3306 ssl  taller1  SQL > Drop Table Job;
+Query OK, 0 rows affected (0.0303 sec)
+ MySQL  localhost:3306 ssl  taller1  SQL > CREATE TABLE Job (
+                                        ->     Job_Code INT NOT NULL AUTO_INCREMENT,
+                                        ->     Job VARCHAR(50) NOT NULL,
+                                        ->     State_code VARCHAR(50) NOT NULL,
+                                        ->     PRIMARY KEY (Job_Code)
+                                        -> );
+Query OK, 0 rows affected (0.0380 sec)
+ MySQL  localhost:3306 ssl  taller1  SQL > INSERT INTO Job (Job, State_code) VALUES
+                                        -> ('Chef', '26'),
+                                        -> ('waiter', '26'),
+                                        -> ('waiter', '56'),
+                                        -> ('Bartender', '56'),
+                                        -> ('Chef', '56');
+Query OK, 5 rows affected (0.0060 sec)
+
+Records: 5  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  taller1  SQL > Drop Table Job;
+Query OK, 0 rows affected (0.0317 sec)
+ MySQL  localhost:3306 ssl  taller1  SQL > CREATE TABLE Job (
+                                        ->     Puesto INT NOT NULL,          -- Identificador único de la fila
+                                        ->     Job_Code INT NOT NULL,       -- El dato entero que querías mantener
+                                        ->     Job VARCHAR(50) NOT NULL,    -- Nombre del puesto
+                                        ->     State_code VARCHAR(50) NOT NULL,
+                                        ->     PRIMARY KEY (Puesto)
+                                        -> );
+Query OK, 0 rows affected (0.0387 sec)
+ MySQL  localhost:3306 ssl  taller1  SQL > INSERT INTO Job (Puesto, Job_Code, Job, State_code) VALUES
+                                        -> (1, 01, 'Chef', '26'),
+                                        -> (2, 02, 'waiter', '26'),
+                                        -> (3, 02, 'waiter', '56'),
+                                        -> (4, 03, 'Bartender', '56'),
+                                        -> (5, 01, 'Chef', '56');
+Query OK, 5 rows affected (0.0226 sec)
+
+Records: 5  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  taller1  SQL > select * from job
+                                        -> ;
++--------+----------+-----------+------------+
+| Puesto | Job_Code | Job       | State_code |
++--------+----------+-----------+------------+
+|      1 |        1 | Chef      | 26         |
+|      2 |        2 | waiter    | 26         |
+|      3 |        2 | waiter    | 56         |
+|      4 |        3 | Bartender | 56         |
+|      5 |        1 | Chef      | 56         |
++--------+----------+-----------+------------+
+5 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  taller1  SQL > select * from employee
+                                        -> ;
++-------------+-------+--------------+
+| Employee_ID | name  | home_station |
++-------------+-------+--------------+
+|           1 | Alice | Michigan     |
+|           2 | Bob   | Wyomong      |
++-------------+-------+--------------+
+2 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  taller1  SQL >
