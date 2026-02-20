@@ -1,0 +1,60 @@
+MySQL Shell 8.0.44
+
+Copyright (c) 2016, 2025, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  localhost:3306 ssl  taller1  SQL > create table persona(
+                                        -> idpersona int not null auto_increment key,
+                                        -> nombre varchar(50),
+                                        -> apellida varchar(50),
+                                        -> fecha_nacimiento date);
+Query OK, 0 rows affected (0.0220 sec)
+ MySQL  localhost:3306 ssl  taller1  SQL > desc persona;
++------------------+-------------+------+-----+---------+----------------+
+| Field            | Type        | Null | Key | Default | Extra          |
++------------------+-------------+------+-----+---------+----------------+
+| idpersona        | int         | NO   | PRI | NULL    | auto_increment |
+| nombre           | varchar(50) | YES  |     | NULL    |                |
+| apellida         | varchar(50) | YES  |     | NULL    |                |
+| fecha_nacimiento | date        | YES  |     | NULL    |                |
++------------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.0058 sec)
+ MySQL  localhost:3306 ssl  taller1  SQL > insert into persona (nombre, apellido, fecha_nacimiento) values ("Pepe","Gomez",2003-02-10"), ("Carlos","Martinez",2002-11-27),("David","Guzman",2000-5-11);
+                                        "> ;
+                                        "> );
+                                        "> ^C
+ MySQL  localhost:3306 ssl  taller1  SQL > \c
+\connect [--mx|--mysqlx|--mc|--mysql] [--ssh <sshuri>] <URI>
+ MySQL  localhost:3306 ssl  taller1  SQL > insert into persona(idpersona,nombre, apellido,fecha_nacimiento) values("Pepe","Gomez",2003-2-10),("Carlos","Martinez",2002-11-27),("David","Guzman",2000-5-11);
+ERROR: 1054 (42S22): Unknown column 'apellido' in 'field list'
+ MySQL  localhost:3306 ssl  taller1  SQL > insert into persona(idpersona,nombre, apellida,fecha_nacimiento) values("Pepe","Gomez",2003-2-10),("Carlos","Martinez",2002-11-27),("David","Guzman",2000-5-11);
+ERROR: 1136 (21S01): Column count doesn't match value count at row 1
+ MySQL  localhost:3306 ssl  taller1  SQL > insert into persona(idpersona,nombre, apellido,fecha_nacimiento) values(1,"Pepe","Gomez",2003-2-10),(2,"Carlos","Martinez",2002-11-27),(3,"David","Guzman",2000-5-11);
+ERROR: 1054 (42S22): Unknown column 'apellido' in 'field list'
+ MySQL  localhost:3306 ssl  taller1  SQL > insert into persona(idpersona,nombre, apellida,fecha_nacimiento) values(1,"Pepe","Gomez",2003-2-10),(2,"Carlos","Martinez",2002-11-27),(3,"David","Guzman",2000-5-11);
+ERROR: 1292 (22007): Incorrect date value: '1991' for column 'fecha_nacimiento' at row 1
+ MySQL  localhost:3306 ssl  taller1  SQL > INSERT INTO persona (idpersona, nombre, apellido, fecha_nacimiento)
+                                        -> VALUES
+                                        -> (1, "Pepe", "Gomez", "2003-02-10"),
+                                        -> (2, "Carlos", "Martinez", "2002-11-27"),
+                                        -> (3, "David", "Guzman", "2000-05-11");
+ERROR: 1054 (42S22): Unknown column 'apellido' in 'field list'
+ MySQL  localhost:3306 ssl  taller1  SQL > INSERT INTO persona (idpersona, nombre, apellida, fecha_nacimiento)  VALUES  (1, "Pepe", "Gomez", "2003-02-10"),  (2, "Carlos", "Martinez", "2002-11-27"),  (3, "David", "Guzman", "2000-05-11");
+Query OK, 3 rows affected (0.0057 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  taller1  SQL > select * from personas
+                                        -> ;
+ERROR: 1146 (42S02): Table 'taller1.personas' doesn't exist
+ MySQL  localhost:3306 ssl  taller1  SQL > select * from persona;
++-----------+--------+----------+------------------+
+| idpersona | nombre | apellida | fecha_nacimiento |
++-----------+--------+----------+------------------+
+|         1 | Pepe   | Gomez    | 2003-02-10       |
+|         2 | Carlos | Martinez | 2002-11-27       |
+|         3 | David  | Guzman   | 2000-05-11       |
++-----------+--------+----------+------------------+
+3 rows in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  taller1  SQL >
